@@ -4,6 +4,11 @@ Online multiplayer mod for SM64 that synchronizes all entities and every level f
 Feel free to report bugs and contribute, but remember, there must be **no upload of any copyrighted asset**. 
 Run `./extract_assets.py --clean && make clean` or `make distclean` to remove ROM-originated content.
 
+## Compiling to the Web
+First off, i *seriously* reccomend using the Dockerfile included with the repo to do this.
+Just make the dockerfile with `docker build -t sm64ex-coop .` (with your terminal in the repo),
+and build with `docker run --rm --mount type=bind,source="$(pwd)",destination=/sm64 sm64ex-coop make TARGET_WEB=1 COOPNET=0 -j4`. That's what worked for me, at least.
+
 ## How to Play
 
 [Instructions on how to play are available on the wiki.](https://github.com/djoslin0/sm64ex-coop/wiki/How-to-Play)
