@@ -245,7 +245,7 @@ static double gfx_sdl_get_time(void) {
 }
 
 static void gfx_sdl_delay(u32 ms) {
-    //Delays aren't needed on broswers
+    //Delays aren't needed on browsers
     #ifndef TARGET_WEB
     SDL_Delay(ms);
     #endif
