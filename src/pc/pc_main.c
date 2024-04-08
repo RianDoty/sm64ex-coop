@@ -163,7 +163,11 @@ void produce_interpolation_frames_and_delay(void) {
     u64 frames = 0;
     f64 curTime = clock_elapsed_f64();
 
+    #ifndef TARGET_WEB
     gRenderingInterpolated = true;
+    #else
+    gRenderingInterpolated = false;
+    #endif
 
     // sanity check target time to deal with hangs and such
     if (fabs(sFrameTargetTime - curTime) > 1) { sFrameTargetTime = curTime - 0.01f; }
