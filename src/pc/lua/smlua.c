@@ -4,7 +4,8 @@
 #include "pc/mods/mods_utils.h"
 #include "pc/crash_handler.h"
 #include "pc/lua/utils/smlua_text_utils.h"
-#include "pc/lua/utils/smlua_audio_utils.h"
+// CLEANSE THY BASS
+// #include "pc/lua/utils/smlua_audio_utils.h"
 #include "pc/lua/utils/smlua_model_utils.h"
 #include "pc/lua/utils/smlua_level_utils.h"
 #include "pc/lua/utils/smlua_anim_utils.h"
@@ -313,8 +314,9 @@ void smlua_update(void) {
 void smlua_shutdown(void) {
     hardcoded_reset_default_values();
     smlua_text_utils_reset_all();
-    smlua_audio_utils_reset_all();
-    audio_custom_shutdown();
+    // CLEANSE THY BASS
+    // smlua_audio_utils_reset_all();
+    // audio_custom_shutdown();
     smlua_cobject_allowlist_shutdown();
     smlua_cpointer_allowlist_shutdown();
     smlua_clear_hooks();

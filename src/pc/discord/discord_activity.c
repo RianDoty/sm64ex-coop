@@ -5,7 +5,7 @@
 #include "pc/utils/misc.h"
 #include "pc/djui/djui_panel_join_message.h"
 #ifdef COOPNET
-#include "pc/network/coopnet/coopnet.h"
+// #include "pc/network/coopnet/coopnet.h"
 #endif
 
 extern struct DiscordApplication app;
@@ -31,22 +31,22 @@ static void on_activity_join(UNUSED void* data, const char* secret) {
     }
 
 #ifdef COOPNET
-    // extract lobby ID
-    token = strtok(NULL, ":");
-    char* end;
-    u64 lobbyId = strtoull(token, &end, 10);
+    // // extract lobby ID
+    // token = strtok(NULL, ":");
+    // char* end;
+    // u64 lobbyId = strtoull(token, &end, 10);
 
-    // extract lobby password
-    token = strtok(NULL, ":");
-    if (token == NULL) { token = ""; }
+    // // extract lobby password
+    // token = strtok(NULL, ":");
+    // if (token == NULL) { token = ""; }
 
-    // join
-    if (gNetworkType != NT_NONE) {
-        network_shutdown(true, false, false, false);
-    }
-    sQueuedLobbyId = lobbyId;
-    snprintf(sQueuedLobbyPassword, 64, "%s", token);
-    sQueuedLobby = 2;
+    // // join
+    // if (gNetworkType != NT_NONE) {
+    //     network_shutdown(true, false, false, false);
+    // }
+    // sQueuedLobbyId = lobbyId;
+    // snprintf(sQueuedLobbyPassword, 64, "%s", token);
+    // sQueuedLobby = 2;
 #endif
 }
 
@@ -137,16 +137,16 @@ void discord_activity_update(void) {
 
 void discord_activity_update_check(void) {
 #ifdef COOPNET
-    if (sQueuedLobby > 0) {
-        if (--sQueuedLobby == 0) {
-            gCoopNetDesiredLobby = sQueuedLobbyId;
-            snprintf(gCoopNetPassword, 64, "%s", sQueuedLobbyPassword);
-            network_reset_reconnect_and_rehost();
-            network_set_system(NS_COOPNET);
-            network_init(NT_CLIENT, false);
-            djui_panel_join_message_create(NULL);
-        }
-    }
+    // if (sQueuedLobby > 0) {
+    //     if (--sQueuedLobby == 0) {
+    //         gCoopNetDesiredLobby = sQueuedLobbyId;
+    //         snprintf(gCoopNetPassword, 64, "%s", sQueuedLobbyPassword);
+    //         network_reset_reconnect_and_rehost();
+    //         network_set_system(NS_COOPNET);
+    //         network_init(NT_CLIENT, false);
+    //         djui_panel_join_message_create(NULL);
+    //     }
+    // }
 #endif
 
     if (gNetworkType == NT_NONE) { return; }

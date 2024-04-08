@@ -29,7 +29,8 @@
 #include "src/pc/lua/utils/smlua_math_utils.h"
 #include "src/pc/lua/utils/smlua_model_utils.h"
 #include "src/pc/lua/utils/smlua_text_utils.h"
-#include "src/pc/lua/utils/smlua_audio_utils.h"
+// CLEANSE THY BASS
+// #include "src/pc/lua/utils/smlua_audio_utils.h"
 #include "src/pc/lua/utils/smlua_level_utils.h"
 #include "src/pc/lua/utils/smlua_anim_utils.h"
 #include "src/pc/lua/utils/smlua_deprecated.h"
@@ -26877,428 +26878,451 @@ int smlua_func_smlua_anim_util_set_animation(lua_State* L) {
 /////////////////////////
 
 int smlua_func_audio_sample_destroy(lua_State* L) {
-    if (L == NULL) { return 0; }
+    // CLEANSE THY BASS
+    // if (L == NULL) { return 0; }
 
-    int top = lua_gettop(L);
-    if (top != 1) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_sample_destroy", 1, top);
-        return 0;
-    }
+    // int top = lua_gettop(L);
+    // if (top != 1) {
+    //     LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_sample_destroy", 1, top);
+    //     return 0;
+    // }
 
-    struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_sample_destroy"); return 0; }
+    // struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_sample_destroy"); return 0; }
 
-    audio_sample_destroy(audio);
+    // audio_sample_destroy(audio);
 
     return 1;
 }
 
 int smlua_func_audio_sample_load(lua_State* L) {
-    if (L == NULL) { return 0; }
+    // CLEANSE THY BASS
+    // if (L == NULL) { return 0; }
 
-    int top = lua_gettop(L);
-    if (top != 1) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_sample_load", 1, top);
-        return 0;
-    }
+    // int top = lua_gettop(L);
+    // if (top != 1) {
+    //     LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_sample_load", 1, top);
+    //     return 0;
+    // }
 
-    const char* filename = smlua_to_string(L, 1);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_sample_load"); return 0; }
+    // const char* filename = smlua_to_string(L, 1);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_sample_load"); return 0; }
 
-    smlua_push_object(L, LOT_BASSAUDIO, audio_sample_load(filename));
+    // smlua_push_object(L, LOT_BASSAUDIO, audio_sample_load(filename));
 
     return 1;
 }
 
 int smlua_func_audio_sample_play(lua_State* L) {
-    if (L == NULL) { return 0; }
+    // CLEANSE THY BASS
+    // if (L == NULL) { return 0; }
 
-    int top = lua_gettop(L);
-    if (top != 3) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_sample_play", 3, top);
-        return 0;
-    }
+    // int top = lua_gettop(L);
+    // if (top != 3) {
+    //     LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_sample_play", 3, top);
+    //     return 0;
+    // }
 
-    struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_sample_play"); return 0; }
+    // struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_sample_play"); return 0; }
 
-    f32* position = smlua_get_vec3f_from_buffer();
-    position[0] = smlua_get_number_field(2, "x");
-    position[1] = smlua_get_number_field(2, "y");
-    position[2] = smlua_get_number_field(2, "z");
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "audio_sample_play"); return 0; }
-    f32 volume = smlua_to_number(L, 3);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 3, "audio_sample_play"); return 0; }
+    // f32* position = smlua_get_vec3f_from_buffer();
+    // position[0] = smlua_get_number_field(2, "x");
+    // position[1] = smlua_get_number_field(2, "y");
+    // position[2] = smlua_get_number_field(2, "z");
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "audio_sample_play"); return 0; }
+    // f32 volume = smlua_to_number(L, 3);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 3, "audio_sample_play"); return 0; }
 
-    audio_sample_play(audio, position, volume);
+    // audio_sample_play(audio, position, volume);
 
-    smlua_push_number_field(2, "x", position[0]);
-    smlua_push_number_field(2, "y", position[1]);
-    smlua_push_number_field(2, "z", position[2]);
+    // smlua_push_number_field(2, "x", position[0]);
+    // smlua_push_number_field(2, "y", position[1]);
+    // smlua_push_number_field(2, "z", position[2]);
 
     return 1;
 }
 
 int smlua_func_audio_sample_stop(lua_State* L) {
-    if (L == NULL) { return 0; }
+    // CLEANSE THY BASS
+    // if (L == NULL) { return 0; }
 
-    int top = lua_gettop(L);
-    if (top != 1) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_sample_stop", 1, top);
-        return 0;
-    }
+    // int top = lua_gettop(L);
+    // if (top != 1) {
+    //     LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_sample_stop", 1, top);
+    //     return 0;
+    // }
 
-    struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_sample_stop"); return 0; }
+    // struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_sample_stop"); return 0; }
 
-    audio_sample_stop(audio);
+    // audio_sample_stop(audio);
 
     return 1;
 }
 
 int smlua_func_audio_stream_destroy(lua_State* L) {
-    if (L == NULL) { return 0; }
+    // CLEANSE THY BASS
+    // if (L == NULL) { return 0; }
 
-    int top = lua_gettop(L);
-    if (top != 1) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_destroy", 1, top);
-        return 0;
-    }
+    // int top = lua_gettop(L);
+    // if (top != 1) {
+    //     LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_destroy", 1, top);
+    //     return 0;
+    // }
 
-    struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_destroy"); return 0; }
+    // struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_destroy"); return 0; }
 
-    audio_stream_destroy(audio);
+    // audio_stream_destroy(audio);
 
     return 1;
 }
 
 int smlua_func_audio_stream_get_frequency(lua_State* L) {
-    if (L == NULL) { return 0; }
+    // CLEANSE THY BASS
+    // if (L == NULL) { return 0; }
 
-    int top = lua_gettop(L);
-    if (top != 1) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_get_frequency", 1, top);
-        return 0;
-    }
+    // int top = lua_gettop(L);
+    // if (top != 1) {
+    //     LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_get_frequency", 1, top);
+    //     return 0;
+    // }
 
-    struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_get_frequency"); return 0; }
+    // struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_get_frequency"); return 0; }
 
-    lua_pushnumber(L, audio_stream_get_frequency(audio));
+    // lua_pushnumber(L, audio_stream_get_frequency(audio));
 
     return 1;
 }
 
 int smlua_func_audio_stream_get_looping(lua_State* L) {
-    if (L == NULL) { return 0; }
+    // CLEANSE THY BASS
+    // if (L == NULL) { return 0; }
 
-    int top = lua_gettop(L);
-    if (top != 1) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_get_looping", 1, top);
-        return 0;
-    }
+    // int top = lua_gettop(L);
+    // if (top != 1) {
+    //     LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_get_looping", 1, top);
+    //     return 0;
+    // }
 
-    struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_get_looping"); return 0; }
+    // struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_get_looping"); return 0; }
 
-    lua_pushboolean(L, audio_stream_get_looping(audio));
+    // lua_pushboolean(L, audio_stream_get_looping(audio));
 
     return 1;
 }
 
 int smlua_func_audio_stream_get_position(lua_State* L) {
-    if (L == NULL) { return 0; }
+    // CLEANSE THY BASS
+    // if (L == NULL) { return 0; }
 
-    int top = lua_gettop(L);
-    if (top != 1) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_get_position", 1, top);
-        return 0;
-    }
+    // int top = lua_gettop(L);
+    // if (top != 1) {
+    //     LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_get_position", 1, top);
+    //     return 0;
+    // }
 
-    struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_get_position"); return 0; }
+    // struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_get_position"); return 0; }
 
-    lua_pushnumber(L, audio_stream_get_position(audio));
+    // lua_pushnumber(L, audio_stream_get_position(audio));
 
     return 1;
 }
 
 int smlua_func_audio_stream_get_tempo(lua_State* L) {
-    if (L == NULL) { return 0; }
+    // CLEANSE THY BASS
+    // if (L == NULL) { return 0; }
 
-    int top = lua_gettop(L);
-    if (top != 1) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_get_tempo", 1, top);
-        return 0;
-    }
+    // int top = lua_gettop(L);
+    // if (top != 1) {
+    //     LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_get_tempo", 1, top);
+    //     return 0;
+    // }
 
-    struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_get_tempo"); return 0; }
+    // struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_get_tempo"); return 0; }
 
-    lua_pushnumber(L, audio_stream_get_tempo(audio));
+    // lua_pushnumber(L, audio_stream_get_tempo(audio));
 
     return 1;
 }
 
 int smlua_func_audio_stream_get_volume(lua_State* L) {
-    if (L == NULL) { return 0; }
+    // CLEANSE THY BASS
+    // if (L == NULL) { return 0; }
 
-    int top = lua_gettop(L);
-    if (top != 1) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_get_volume", 1, top);
-        return 0;
-    }
+    // int top = lua_gettop(L);
+    // if (top != 1) {
+    //     LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_get_volume", 1, top);
+    //     return 0;
+    // }
 
-    struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_get_volume"); return 0; }
+    // struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_get_volume"); return 0; }
 
-    lua_pushnumber(L, audio_stream_get_volume(audio));
+    // lua_pushnumber(L, audio_stream_get_volume(audio));
 
     return 1;
 }
 
 int smlua_func_audio_stream_load(lua_State* L) {
-    if (L == NULL) { return 0; }
+    // CLEANSE THY BASS
+    // if (L == NULL) { return 0; }
 
-    int top = lua_gettop(L);
-    if (top != 1) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_load", 1, top);
-        return 0;
-    }
+    // int top = lua_gettop(L);
+    // if (top != 1) {
+    //     LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_load", 1, top);
+    //     return 0;
+    // }
 
-    const char* filename = smlua_to_string(L, 1);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_load"); return 0; }
+    // const char* filename = smlua_to_string(L, 1);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_load"); return 0; }
 
-    smlua_push_object(L, LOT_BASSAUDIO, audio_stream_load(filename));
+    // smlua_push_object(L, LOT_BASSAUDIO, audio_stream_load(filename));
 
     return 1;
 }
 
 int smlua_func_audio_stream_load_url(lua_State* L) {
-    if (L == NULL) { return 0; }
+    // CLEANSE THY BASS
+    // if (L == NULL) { return 0; }
 
-    int top = lua_gettop(L);
-    if (top != 1) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_load_url", 1, top);
-        return 0;
-    }
+    // int top = lua_gettop(L);
+    // if (top != 1) {
+    //     LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_load_url", 1, top);
+    //     return 0;
+    // }
 
-    const char* url = smlua_to_string(L, 1);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_load_url"); return 0; }
+    // const char* url = smlua_to_string(L, 1);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_load_url"); return 0; }
 
-    smlua_push_object(L, LOT_BASSAUDIO, audio_stream_load_url(url));
+    // smlua_push_object(L, LOT_BASSAUDIO, audio_stream_load_url(url));
 
     return 1;
 }
 
 int smlua_func_audio_stream_pause(lua_State* L) {
-    if (L == NULL) { return 0; }
+    // CLEANSE THY BASS
+    // if (L == NULL) { return 0; }
 
-    int top = lua_gettop(L);
-    if (top != 1) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_pause", 1, top);
-        return 0;
-    }
+    // int top = lua_gettop(L);
+    // if (top != 1) {
+    //     LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_pause", 1, top);
+    //     return 0;
+    // }
 
-    struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_pause"); return 0; }
+    // struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_pause"); return 0; }
 
-    audio_stream_pause(audio);
+    // audio_stream_pause(audio);
 
     return 1;
 }
 
 int smlua_func_audio_stream_play(lua_State* L) {
-    if (L == NULL) { return 0; }
+    // CLEANSE THY BASS
+    // if (L == NULL) { return 0; }
 
-    int top = lua_gettop(L);
-    if (top != 3) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_play", 3, top);
-        return 0;
-    }
+    // int top = lua_gettop(L);
+    // if (top != 3) {
+    //     LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_play", 3, top);
+    //     return 0;
+    // }
 
-    struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_play"); return 0; }
-    bool restart = smlua_to_boolean(L, 2);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "audio_stream_play"); return 0; }
-    f32 volume = smlua_to_number(L, 3);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 3, "audio_stream_play"); return 0; }
+    // struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_play"); return 0; }
+    // bool restart = smlua_to_boolean(L, 2);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "audio_stream_play"); return 0; }
+    // f32 volume = smlua_to_number(L, 3);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 3, "audio_stream_play"); return 0; }
 
-    audio_stream_play(audio, restart, volume);
+    // audio_stream_play(audio, restart, volume);
 
     return 1;
 }
 
 int smlua_func_audio_stream_set_frequency(lua_State* L) {
-    if (L == NULL) { return 0; }
+    // CLEANSE THY BASS
+    // if (L == NULL) { return 0; }
 
-    int top = lua_gettop(L);
-    if (top != 2) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_set_frequency", 2, top);
-        return 0;
-    }
+    // int top = lua_gettop(L);
+    // if (top != 2) {
+    //     LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_set_frequency", 2, top);
+    //     return 0;
+    // }
 
-    struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_set_frequency"); return 0; }
-    f32 freq = smlua_to_number(L, 2);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "audio_stream_set_frequency"); return 0; }
+    // struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_set_frequency"); return 0; }
+    // f32 freq = smlua_to_number(L, 2);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "audio_stream_set_frequency"); return 0; }
 
-    audio_stream_set_frequency(audio, freq);
+    // audio_stream_set_frequency(audio, freq);
 
     return 1;
 }
 
 int smlua_func_audio_stream_set_looping(lua_State* L) {
-    if (L == NULL) { return 0; }
+    // CLEANSE THY BASS
+    // if (L == NULL) { return 0; }
 
-    int top = lua_gettop(L);
-    if (top != 2) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_set_looping", 2, top);
-        return 0;
-    }
+    // int top = lua_gettop(L);
+    // if (top != 2) {
+    //     LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_set_looping", 2, top);
+    //     return 0;
+    // }
 
-    struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_set_looping"); return 0; }
-    bool looping = smlua_to_boolean(L, 2);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "audio_stream_set_looping"); return 0; }
+    // struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_set_looping"); return 0; }
+    // bool looping = smlua_to_boolean(L, 2);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "audio_stream_set_looping"); return 0; }
 
-    audio_stream_set_looping(audio, looping);
+    // audio_stream_set_looping(audio, looping);
 
     return 1;
 }
 
 int smlua_func_audio_stream_set_position(lua_State* L) {
-    if (L == NULL) { return 0; }
+    // CLEANSE THY BASS
+    // if (L == NULL) { return 0; }
 
-    int top = lua_gettop(L);
-    if (top != 2) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_set_position", 2, top);
-        return 0;
-    }
+    // int top = lua_gettop(L);
+    // if (top != 2) {
+    //     LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_set_position", 2, top);
+    //     return 0;
+    // }
 
-    struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_set_position"); return 0; }
-    f32 pos = smlua_to_number(L, 2);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "audio_stream_set_position"); return 0; }
+    // struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_set_position"); return 0; }
+    // f32 pos = smlua_to_number(L, 2);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "audio_stream_set_position"); return 0; }
 
-    audio_stream_set_position(audio, pos);
+    // audio_stream_set_position(audio, pos);
 
     return 1;
 }
 
 int smlua_func_audio_stream_set_speed(lua_State* L) {
-    if (L == NULL) { return 0; }
+    // CLEANSE THY BASS
+    // if (L == NULL) { return 0; }
 
-    int top = lua_gettop(L);
-    if (top != 4) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_set_speed", 4, top);
-        return 0;
-    }
+    // int top = lua_gettop(L);
+    // if (top != 4) {
+    //     LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_set_speed", 4, top);
+    //     return 0;
+    // }
 
-    struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_set_speed"); return 0; }
-    f32 initial_freq = smlua_to_number(L, 2);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "audio_stream_set_speed"); return 0; }
-    f32 speed = smlua_to_number(L, 3);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 3, "audio_stream_set_speed"); return 0; }
-    bool pitch = smlua_to_boolean(L, 4);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 4, "audio_stream_set_speed"); return 0; }
+    // struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_set_speed"); return 0; }
+    // f32 initial_freq = smlua_to_number(L, 2);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "audio_stream_set_speed"); return 0; }
+    // f32 speed = smlua_to_number(L, 3);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 3, "audio_stream_set_speed"); return 0; }
+    // bool pitch = smlua_to_boolean(L, 4);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 4, "audio_stream_set_speed"); return 0; }
 
-    audio_stream_set_speed(audio, initial_freq, speed, pitch);
+    // audio_stream_set_speed(audio, initial_freq, speed, pitch);
 
     return 1;
 }
 
 int smlua_func_audio_stream_set_tempo(lua_State* L) {
-    if (L == NULL) { return 0; }
+    // CLEANSE THY BASS
+    // if (L == NULL) { return 0; }
 
-    int top = lua_gettop(L);
-    if (top != 2) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_set_tempo", 2, top);
-        return 0;
-    }
+    // int top = lua_gettop(L);
+    // if (top != 2) {
+    //     LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_set_tempo", 2, top);
+    //     return 0;
+    // }
 
-    struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_set_tempo"); return 0; }
-    f32 tempo = smlua_to_number(L, 2);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "audio_stream_set_tempo"); return 0; }
+    // struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_set_tempo"); return 0; }
+    // f32 tempo = smlua_to_number(L, 2);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "audio_stream_set_tempo"); return 0; }
 
-    audio_stream_set_tempo(audio, tempo);
+    // audio_stream_set_tempo(audio, tempo);
 
     return 1;
 }
 
 int smlua_func_audio_stream_set_volume(lua_State* L) {
-    if (L == NULL) { return 0; }
+    // CLEANSE THY BASS
+    // if (L == NULL) { return 0; }
 
-    int top = lua_gettop(L);
-    if (top != 2) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_set_volume", 2, top);
-        return 0;
-    }
+    // int top = lua_gettop(L);
+    // if (top != 2) {
+    //     LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_set_volume", 2, top);
+    //     return 0;
+    // }
 
-    struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_set_volume"); return 0; }
-    f32 volume = smlua_to_number(L, 2);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "audio_stream_set_volume"); return 0; }
+    // struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_set_volume"); return 0; }
+    // f32 volume = smlua_to_number(L, 2);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "audio_stream_set_volume"); return 0; }
 
-    audio_stream_set_volume(audio, volume);
+    // audio_stream_set_volume(audio, volume);
 
     return 1;
 }
 
 int smlua_func_audio_stream_stop(lua_State* L) {
-    if (L == NULL) { return 0; }
+    // CLEANSE THY BASS
+    // if (L == NULL) { return 0; }
 
-    int top = lua_gettop(L);
-    if (top != 1) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_stop", 1, top);
-        return 0;
-    }
+    // int top = lua_gettop(L);
+    // if (top != 1) {
+    //     LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "audio_stream_stop", 1, top);
+    //     return 0;
+    // }
 
-    struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_stop"); return 0; }
+    // struct BassAudio* audio = (struct BassAudio*)smlua_to_cobject(L, 1, LOT_BASSAUDIO);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "audio_stream_stop"); return 0; }
 
-    audio_stream_stop(audio);
+    // audio_stream_stop(audio);
 
     return 1;
 }
 
 int smlua_func_smlua_audio_utils_replace_sequence(lua_State* L) {
-    if (L == NULL) { return 0; }
+    // CLEANSE THY BASS
+    // if (L == NULL) { return 0; }
 
-    int top = lua_gettop(L);
-    if (top != 4) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "smlua_audio_utils_replace_sequence", 4, top);
-        return 0;
-    }
+    // int top = lua_gettop(L);
+    // if (top != 4) {
+    //     LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "smlua_audio_utils_replace_sequence", 4, top);
+    //     return 0;
+    // }
 
-    u8 sequenceId = smlua_to_integer(L, 1);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "smlua_audio_utils_replace_sequence"); return 0; }
-    u8 bankId = smlua_to_integer(L, 2);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "smlua_audio_utils_replace_sequence"); return 0; }
-    u8 defaultVolume = smlua_to_integer(L, 3);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 3, "smlua_audio_utils_replace_sequence"); return 0; }
-    const char* m64Name = smlua_to_string(L, 4);
-    if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 4, "smlua_audio_utils_replace_sequence"); return 0; }
+    // u8 sequenceId = smlua_to_integer(L, 1);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 1, "smlua_audio_utils_replace_sequence"); return 0; }
+    // u8 bankId = smlua_to_integer(L, 2);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 2, "smlua_audio_utils_replace_sequence"); return 0; }
+    // u8 defaultVolume = smlua_to_integer(L, 3);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 3, "smlua_audio_utils_replace_sequence"); return 0; }
+    // const char* m64Name = smlua_to_string(L, 4);
+    // if (!gSmLuaConvertSuccess) { LOG_LUA("Failed to convert parameter %u for function '%s'", 4, "smlua_audio_utils_replace_sequence"); return 0; }
 
-    smlua_audio_utils_replace_sequence(sequenceId, bankId, defaultVolume, m64Name);
+    // smlua_audio_utils_replace_sequence(sequenceId, bankId, defaultVolume, m64Name);
 
     return 1;
 }
 
 int smlua_func_smlua_audio_utils_reset_all(UNUSED lua_State* L) {
-    if (L == NULL) { return 0; }
+    // CLEANSE THY BASS
+    // if (L == NULL) { return 0; }
 
-    int top = lua_gettop(L);
-    if (top != 0) {
-        LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "smlua_audio_utils_reset_all", 0, top);
-        return 0;
-    }
+    // int top = lua_gettop(L);
+    // if (top != 0) {
+    //     LOG_LUA_LINE("Improper param count for '%s': Expected %u, Received %u", "smlua_audio_utils_reset_all", 0, top);
+    //     return 0;
+    // }
 
 
-    smlua_audio_utils_reset_all();
+    // smlua_audio_utils_reset_all();
 
     return 1;
 }

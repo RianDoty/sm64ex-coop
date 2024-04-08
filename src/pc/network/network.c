@@ -84,7 +84,7 @@ void network_set_system(enum NetworkSystemType nsType) {
     switch (nsType) {
         case NS_SOCKET:  gNetworkSystem = &gNetworkSystemSocket; break;
 #ifdef COOPNET
-        case NS_COOPNET: gNetworkSystem = &gNetworkSystemCoopNet; break;
+        // case NS_COOPNET: gNetworkSystem = &gNetworkSystemCoopNet; break;
 #endif
         default: gNetworkSystem = &gNetworkSystemSocket; LOG_ERROR("Unknown network system: %d", nsType); break;
     }
@@ -433,9 +433,9 @@ void network_reconnect_begin(void) {
     sNetworkReconnectTimer = 2 * 30;
 
 #ifdef COOPNET
-    sNetworkReconnectType = (gNetworkSystem == &gNetworkSystemCoopNet)
-                          ? NS_COOPNET
-                          : NS_SOCKET;
+    // sNetworkReconnectType = (gNetworkSystem == &gNetworkSystemCoopNet)
+    //                       ? NS_COOPNET
+    //                       : NS_SOCKET;
 #else
     sNetworkReconnectType = NS_SOCKET;
 #endif
@@ -519,11 +519,11 @@ static void network_update_area_timer(void) {
 }
 
 #ifdef COOPNET
-void network_update_coopnet(void) {
-    if (gNetworkType != NT_NONE) { return; }
-    if (!ns_coopnet_is_connected()) { return; }
-    ns_coopnet_update();
-}
+// void network_update_coopnet(void) {
+//     if (gNetworkType != NT_NONE) { return; }
+//     if (!ns_coopnet_is_connected()) { return; }
+//     ns_coopnet_update();
+// }
 #endif
 
 void network_update(void) {
@@ -535,7 +535,7 @@ void network_update(void) {
     network_reconnect_update();
 
 #ifdef COOPNET
-    network_update_coopnet();
+    // network_update_coopnet();
 #endif
 
     // check for level loaded event

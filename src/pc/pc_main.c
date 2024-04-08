@@ -8,6 +8,11 @@
 
 #include "pc/lua/smlua.h"
 
+#ifdef TARGET_WEB
+#include <emscripten.h>
+#include <emscripten/html5.h>
+#endif
+
 #include "game/memory.h"
 #include "audio/external.h"
 
@@ -31,10 +36,11 @@
 #include "game/main.h"
 #include "game/rumble_init.h"
 
-#include "include/bass/bass.h"
-#include "include/bass/bass_fx.h"
-#include "src/bass_audio/bass_audio_helpers.h"
-#include "pc/lua/utils/smlua_audio_utils.h"
+// CLEANSE THY BASS
+// #include "include/bass/bass.h"
+// #include "include/bass/bass_fx.h"
+// #include "src/bass_audio/bass_audio_helpers.h"
+// #include "pc/lua/utils/smlua_audio_utils.h"
 
 #include "pc/network/version.h"
 #include "pc/network/socket/domain_res.h"
@@ -163,16 +169,23 @@ void produce_interpolation_frames_and_delay(void) {
     if (fabs(sFrameTargetTime - curTime) > 1) { sFrameTargetTime = curTime - 0.01f; }
 
     // interpolate and render
+    // this causes massive performance issues on web versions. Begone
+    #ifndef TARGET_WEB
     while ((curTime = clock_elapsed_f64()) < sFrameTargetTime) {
+    #endif
         gfx_start_frame();
         f32 delta = MIN((curTime - sFrameTimeStart) / (sFrameTargetTime - sFrameTimeStart), 1);
         gRenderingDelta = delta;
+        #ifndef TARGET_WEB
         if (!gSkipInterpolationTitleScreen && (configFrameLimit > 30 || configUncappedFramerate)) { patch_interpolations(delta); }
+        #endif
         send_display_list(gGfxSPTask);
         gfx_end_frame();
 
         // delay
+        #ifndef TARGET_WEB
         if (!configUncappedFramerate) {
+        #endif
             f64 targetDelta = 1.0 / (f64) configFrameLimit;
             f64 now = clock_elapsed_f64();
             f64 actualDelta = now - curTime;
@@ -180,10 +193,14 @@ void produce_interpolation_frames_and_delay(void) {
                 f64 delay = ((targetDelta - actualDelta) * 1000.0);
                 WAPI.delay((u32) delay);
             }
+        #ifndef TARGET_WEB
         }
+        #endif
 
         frames++;
+    #ifndef TARGET_WEB
     }
+    #endif
 
     static u64 sFramesSinceFpsUpdate = 0;
     static u64 sLastFpsUpdateTime = 0;
@@ -234,17 +251,19 @@ void produce_one_frame(void) {
 }
 
 void audio_shutdown(void) {
-    audio_custom_shutdown();
-    if (audio_api) {
-        if (audio_api->shutdown) audio_api->shutdown();
-        audio_api = NULL;
-    }
+    // CLEANSE THY BASS
+    // audio_custom_shutdown();
+    // if (audio_api) {
+    //     if (audio_api->shutdown) audio_api->shutdown();
+    //     audio_api = NULL;
+    // }
 }
 
 void game_deinit(void) {
     if (gGameInited) configfile_save(configfile_name());
     controller_shutdown();
-    audio_custom_shutdown();
+    // CLEANSE THY BASS
+    // audio_custom_shutdown();
     audio_shutdown();
     gfx_shutdown();
     network_shutdown(true, true, false, false);
@@ -256,8 +275,46 @@ void game_deinit(void) {
 void game_exit(void) {
     LOG_INFO("exiting cleanly");
     game_deinit();
+    #ifndef TARGET_WEB
     exit(0);
+    #endif
 }
+
+#ifdef TARGET_WEB
+// NEW STUFF! Sets up the canvas to recieve frames
+// copied (mostly) from sm64ex's web port
+static void em_main_loop(void) {
+}
+
+static void request_anim_frame(void (*func)(double time)) {
+    EM_ASM(requestAnimationFrame(function(time) {
+        dynCall("vd", $0, [time]);
+    }), func);
+}
+
+static void on_anim_frame(double time) {
+    static double target_time;
+
+    time *= 0.03; // milliseconds to frame count (33.333 ms -> 1)
+
+    if (time >= target_time + 10.0) {
+        // We are lagging 10 frames behind, probably due to coming back after inactivity,
+        // so reset, with a small margin to avoid potential jitter later.
+        target_time = time - 0.010;
+    }
+
+    for (int i = 0; i < 2; i++) {
+        // If refresh rate is 15 Hz or something we might need to generate two frames
+        if (time >= target_time) {
+            produce_one_frame();
+            target_time = target_time + 1.0;
+        }
+    }
+
+    if (gGameInited) // only continue if the init flag is still set
+        request_anim_frame(on_anim_frame);
+}
+#endif TARGET_WEB
 
 void* main_game_init(UNUSED void* arg) {
     const char *gamedir = gCLIOpts.GameDir[0] ? gCLIOpts.GameDir : FS_BASEDIR;
@@ -316,7 +373,8 @@ void* main_game_init(UNUSED void* arg) {
 
     audio_init();
     sound_init();
-    bassh_init();
+    // CLEANSE THY BASS
+    //bassh_init();
     network_player_init();
 
 #ifdef EXTERNAL_DATA
@@ -388,6 +446,7 @@ int main(int argc, char *argv[]) {
         network_init(NT_NONE, false);
     }
 
+    #ifndef TARGET_WEB
     // Main loop
     while (true) {
         debug_context_reset();
@@ -402,7 +461,16 @@ int main(int argc, char *argv[]) {
 #endif
         CTX_END(CTX_FRAME);
     }
+    #endif
 
-    bassh_deinit();
+    #ifdef TARGET_WEB
+    // Main loop (emscripten edition)
+    //Sets the main loop to do nothing, starts requesting frames
+    emscripten_set_main_loop(em_main_loop, 0, 0);
+    request_anim_frame(on_anim_frame);
+    #endif
+
+    // CLEANSE THY BASS
+    //bassh_deinit();
     return 0;
 }
