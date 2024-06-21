@@ -55,7 +55,7 @@ EXTERNAL_DATA ?= 0
 # Enable Discord Game SDK (used for Discord invites)
 DISCORD_SDK ?= 1
 # Enable CoopNet SDK (used for CoopNet server hosting)
-COOPNET ?= 1
+COOPNET ?= 0
 # Enable docker build workarounds
 DOCKERBUILD ?= 0
 # Sets your optimization level for building.
@@ -436,7 +436,7 @@ endif
 
 
 # Whether to hide commands or not
-VERBOSE ?= 0
+VERBOSE ?= 1
 ifeq ($(VERBOSE),0)
   V := @
 endif
@@ -533,11 +533,11 @@ endif
 
 ifeq ($(TARGET_WEB),1)
   EXE := $(BUILD_DIR)/$(TARGET_STRING).html
-  else
+else
   ifeq ($(WINDOWS_BUILD),1)
 	  EXE := $(BUILD_DIR)/$(TARGET_STRING).exe
 
-    else # Linux builds/binary namer
+  else # Linux builds/binary namer
 	  ifeq ($(TARGET_RPI),1)
 		  EXE := $(BUILD_DIR)/$(TARGET_STRING).arm
 	  else
@@ -717,10 +717,16 @@ ifeq ($(OSX_BUILD),1)
 endif
 
 ifeq ($(COMPILER),emscripten)
-  # This is horrific practice. Move these to other vars when i'm sure they won't screw up the compile
-  CC := emcc -s USE_SDL=2 -s USE_ZLIB=1 -s USE_WEBGL2=1 -DUSE_GLES
-  CXX := em++ -s USE_SDL=2 -s USE_ZLIB=1 -s USE_WEBGL2=1 -DUSE_GLES
-  CPP := emcc -s USE_SDL=2 -s USE_ZLIB=1 -s USE_WEBGL2=1 -DUSE_GLES
+  # This is horrific practice. Move these to other vars when i'm sure they won't screw up the compile.
+  # Also, emcc and em++ aren't formatted right to work with (CROSS), so :P
+
+  #  For reference and anyone else stumbling upon this clusterfuck when I can't help you, here's about where this stuff should go (I thiiiink.)
+  # All -s flags should go in both CFLAGS and LDFLAGS.
+  # -D flags have their own place in here already, i think? put them there.
+
+  CC := emcc -s USE_PTHREADS=1 -s USE_SDL=2 -s USE_ZLIB=1 -s USE_WEBGL2=1 -DUSE_GLES
+  CXX := em++ -s USE_PTHREADS=1 -s USE_SDL=2 -s USE_ZLIB=1 -s USE_WEBGL2=1 -DUSE_GLES
+  CPP := emcc -s USE_PTHREADS=1 -s USE_SDL=2 -s USE_ZLIB=1 -s USE_WEBGL2=1 -DUSE_GLES
 
   EXTRA_CFLAGS += -w 
 
@@ -798,7 +804,11 @@ else
   LD := $(CXX)
 endif
 
-AR        := $(CROSS)ar
+ifeq ($(COMPILER), emscripten)
+  AR := emar
+else 
+  AR        := $(CROSS)ar
+endif
 
 ifeq ($(TARGET_N64),1)
   TARGET_CFLAGS := -nostdinc -DTARGET_N64 -D_LANGUAGE_C
@@ -941,22 +951,24 @@ endif
 
 # Reusing code from sm64ex
 ifeq ($(TARGET_WEB),1)
-  LDFLAGS := -lm $(BACKEND_LDFLAGS) -no-pie -lSDL2 -lpthread --verbose -lm -lGL -no-pie -s TOTAL_MEMORY=64MB -g4 --source-map-base http://localhost:8080/ -s "EXPORTED_RUNTIME_METHODS=['callMain']" -sMAX_WEBGL_VERSION=2
+  LDFLAGS := -lm $(BACKEND_LDFLAGS) -no-pie -lpthread --verbose -lm -lGL -no-pie -s TOTAL_MEMORY=64MB -g4 --source-map-base http://localhost:8080/ -s "EXPORTED_RUNTIME_METHODS=['callMain']" -sMAX_WEBGL_VERSION=2
 
-else ifeq ($(WINDOWS_BUILD),1)
-  LDFLAGS := $(BITS) -march=$(TARGET_ARCH) -Llib -lpthread $(BACKEND_LDFLAGS) -static
-  ifeq ($(CROSS),)
-    LDFLAGS += -no-pie
+else 
+  ifeq ($(WINDOWS_BUILD),1)
+    LDFLAGS := $(BITS) -march=$(TARGET_ARCH) -Llib -lpthread $(BACKEND_LDFLAGS) -static
+    ifeq ($(CROSS),)
+      LDFLAGS += -no-pie
+    endif
+    ifeq ($(WINDOWS_CONSOLE),1)
+      LDFLAGS += -mconsole
+    endif
+  else ifeq ($(TARGET_RPI),1)
+    LDFLAGS := $(OPT_FLAGS) -lm $(BACKEND_LDFLAGS) -no-pie
+  else ifeq ($(OSX_BUILD),1)
+    LDFLAGS := -lm $(BACKEND_LDFLAGS) -lpthread
+  else
+    LDFLAGS := $(BITS) -march=$(TARGET_ARCH) -lm $(BACKEND_LDFLAGS) -no-pie -lpthread
   endif
-  ifeq ($(WINDOWS_CONSOLE),1)
-    LDFLAGS += -mconsole
-  endif
-else ifeq ($(TARGET_RPI),1)
-  LDFLAGS := $(OPT_FLAGS) -lm $(BACKEND_LDFLAGS) -no-pie
-else ifeq ($(OSX_BUILD),1)
-  LDFLAGS := -lm $(BACKEND_LDFLAGS) -lpthread
-else
-  LDFLAGS := $(BITS) -march=$(TARGET_ARCH) -lm $(BACKEND_LDFLAGS) -no-pie -lpthread
 endif
 
 ifeq ($(WINDOWS_BUILD),0)
@@ -1056,7 +1068,7 @@ endif
 
 ## CLEANSE THY INCLUDES, BEGONE!
 ifeq ($(TARGET_WEB),1)
-
+  LDFLAGS +=
 # Network/Discord/Bass (ugh, needs cleanup)
 else ifeq ($(WINDOWS_BUILD),1)
   LDFLAGS += -L"ws2_32" -lwsock32
@@ -1140,7 +1152,7 @@ ifeq ($(DISCORD_SDK),1)
 endif
 
 # Check for COOPNET option
-ifeq ($(TARGET_WEB),1)
+ifeq ($(TARGET_WEB),1) # Just disabling coopnet here for now while it's still broken.
 
 else ifeq ($(COOPNET),1)
   CC_CHECK_CFLAGS += -DCOOPNET

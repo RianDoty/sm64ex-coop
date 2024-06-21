@@ -33,6 +33,11 @@
 *.app
 *.hex
 
+# Other Outputs
+*.js
+*.html
+*.wasm
+
 # Debug files
 *.dSYM/
 *.su
